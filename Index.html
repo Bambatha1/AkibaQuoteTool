@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akiba Digital Quotation Tool</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">
+        <!-- Replace with an <img> pointing to your logo if desired -->
+        <h1>Akiba Digital – Quote Generator</h1>
+        <p class="subtitle">Multi-line quotation with graduated pricing</p>
+      </div>
+      <div class="meta">
+        <label>Prepared By
+          <input type="text" id="preparedBy" placeholder="Your name" />
+        </label>
+        <label>Quote Date
+          <input type="date" id="quoteDate" />
+        </label>
+        <label>Quote #
+          <input type="text" id="quoteNumber" placeholder="AKB-0001" />
+        </label>
+      </div>
+    </header>
+
+    <form id="quoteForm">
+      <fieldset>
+        <legend>Customer Information</legend>
+        <div class="grid2">
+          <label>Company Name
+            <input type="text" id="company" required />
+          </label>
+          <label>Contact Person
+            <input type="text" id="contact" required />
+          </label>
+          <label>Email
+            <input type="email" id="email" required />
+          </label>
+          <label>Industry
+            <select id="industry">
+              <option value="fintech">Fintech</option>
+              <option value="lending">Lending</option>
+              <option value="insurance">Insurance</option>
+              <option value="banking">Banking</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Products & Usage</legend>
+
+        <div class="table-actions">
+          <button type="button" id="addLineBtn">+ Add Line Item</button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="lineItemsTable">
+            <thead>
+              <tr>
+                <th style="width: 34%">Product (Endpoint – Description)</th>
+                <th style="width: 12%">Monthly Volume</th>
+                <th style="width: 12%">Unit Price</th>
+                <th style="width: 12%">Monthly Cost</th>
+                <th style="width: 12%">Contract Months</th>
+                <th style="width: 12%">Line Total</th>
+                <th style="width: 6%"></th>
+              </tr>
+            </thead>
+            <tbody id="lineItemsBody">
+              <!-- Rows inserted by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-row">
+          <label>General Notes (optional)
+            <textarea id="generalNotes" rows="3" placeholder="Add any commercial notes, scope or assumptions"></textarea>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Commercial Terms</legend>
+        <div class="grid3">
+          <label>Billing Cycle
+            <select id="cycle">
+              <option value="monthly">Monthly</option>
+              <option value="quarterly">Quarterly</option>
+              <option value="annually">Annually</option>
+            </select>
+          </label>
+          <label>Currency
+            <select id="currency">
+              <option value="ZAR">ZAR</option>
+              <option value="USD">USD</option>
+            </select>
+          </label>
+          <label>VAT
+            <div class="inline">
+              <input type="checkbox" id="applyVAT" checked />
+              <input type="number" id="vatRate" value="15" min="0" max="30" step="0.01" />
+              <span>%</span>
+            </div>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="totals">
+        <div class="totals-row"><span>Subtotal</span><span id="subtotalDisplay">R0.00</span></div>
+        <div class="totals-row"><span>VAT</span><span id="vatDisplay">R0.00</span></div>
+        <div class="totals-row grand"><span>Total Contract Value</span><span id="grandTotalDisplay">R0.00</span></div>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Generate Quote Preview</button>
+        <button type="button" id="downloadBtn" class="secondary" style="display:none;">Download PDF</button>
+      </div>
+    </form>
+
+    <section id="quoteResult" class="quote-output"></section>
+  </div>
+
+  <!-- jsPDF for PDF generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="script.js"></script>
+</body>
+</html>

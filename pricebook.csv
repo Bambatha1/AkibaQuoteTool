@@ -1,0 +1,55 @@
+﻿/api/v3/bankverification/consumer,Consumer Bank Verification ,5
+/api/v1/bankverification/consumer,Consumer Bank Verification ,5
+/api/v4/idverification,Basic ID verification (SA only),3
+/api/kyc/verification,Know Your Customer (KYC) Verification,3
+/api/consumer/expresstrace,Express Consumer Trace,5
+/api/consumer/expresstrace/pdfreport,Consumer trace PDF report (second call),3
+/api/v2/consumertrace,Full Consumer Trace,12
+/api/liveidphotoverification,Live ID Photo Verification,5
+/api/v2/idphotoverification,Basic ID Verification (real-time DoHA),4
+/api/v3/idverification,ID Verification,3
+/api/consumertrace,Consumer Trace,51
+/api/idverification,ID Verification,51
+/api/searchphonenumber,Search Phone Number,38
+/api/realtimeidverification,Real-time ID Verification,33
+/api/v2/idverification,"Non-SA ID Verification (NG, KE, GH, ZM, UG)",15
+,,
+/api/bankstatement/liquidity,Liquidity Score,5
+/api/bankstatement/risk,Risk Score,5
+/api/bankstatement/behavioral-risk,Behavioural Risk Score,5
+/api/bankstatement/transactions,Transactions,5
+/api/bankstatement/upload,Bank statement upload,5
+,,
+/api/v3/bankverification/business,Basic bank account verification - SA only ,5
+/api/kyb/verification,Know Your Business (KYB) Verification,76
+/enterprise/basicinformation,Company basic information,15
+/enterprise/companydirectors,Company directors,15
+/enterprise/efilinghistory,Efilinghistory,15
+/enterprise/officeaddresses,Company Office Address,15
+/enterprise/companyprofile,Company Profile,15
+/enterprise/directorprofile,Director Verification,15
+/enterprise/directorverification,Director Profile,15
+/api/v1/bankverification,Bank Verification,15
+/api/commercial/businesssearch,Transunion Business Search,15
+/api/businessdetails,Business Details,15
+/api/v2/fullbusinessdetails,Global Business Details,15
+/api/v2/searchcompanies,Global Company Search,15
+/api/v2/searchdirector,Directorship global search,15
+/api/searchdirector,Search Director,76
+/api/v2/businessdetails,Global Business Details,103
+,,
+/api/commercial/transunionreport,TransUnion Commercial Credit Report ,199
+/api/commercial/transunionreportpdf,TransUnion Commercial Credit Report PDF,199
+/api/consumer/transunionreport,TransUnion Consumer Credit Report ,48
+/api/consumer/transunionreportpdf,TransUnion Consumer Credit Report PDF,48
+/api/transunionreport,Commercial Credit Report (second call),506
+/api/v2/transunionverification,Transunion Commercial Verification,582
+/api/transunionverification,Commercial Search/ Transunion Verification,76
+/api/consumerexperianreport,Consumer Experian Credit Report,266
+/api/expresscreditscore,expressCreditScore / Express Consumer Credit Score,30
+,,
+/api/commercial/amlpep,Commercial AML/PEP,2
+/api/consumer/hawks,Consumer Hawks,6
+/api/v3/amlpep,Consumer AML/PEP,2
+/api/v2/amlpep,Global Consumer AML/PEP,9
+,,
