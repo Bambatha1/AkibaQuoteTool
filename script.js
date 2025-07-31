@@ -519,7 +519,11 @@ const products = {
 // =========================
 function money(amount, currency = "ZAR") {
   const symbol = currency === "USD" ? "$" : "R";
-  return `${symbol}${Number(amount || 0).toFixed(2)}`;
+  const formatted = Number(amount || 0).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  return `${symbol}${formatted}`;
 }
 
 function getUnitPrice(endpoint, volume) {
@@ -745,8 +749,27 @@ function renderQuoteHTML(totals) {
 
       ${notes ? `<div style="margin-top:16px; font-size:12px;"><strong>Notes:</strong><br/>${notes.replace(/\n/g, "<br/>")}</div>` : ""}
 
-      <p style="margin-top:24px; font-size:11px; color:#6b7280;">Pricing is based on graduated per-call unit pricing with a 7.25% discount applied at each higher tier. Actual billing reflects metered usage per endpoint and contracted terms. Additional data provider fees may apply for specific reports or jurisdictions.</p>
+      <p style="margin-top:24px; font-size:11px; color:#6b7280;">Pricing is based on graduated per-call unit pricing with a discount applied at each higher tier. Actual billing reflects metered usage per endpoint and contracted terms. Additional data provider fees may apply for specific reports or jurisdictions.</p>
     </div>`;
+}
+
+function downloadQuoteAsPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+  const img = new Image();
+  img.src = "akiba_logo.png";
+  img.onload = () => {
+    doc.addImage(img, "PNG", 36, 20, 100, 40); // adjust size and position as needed
+    doc.html(window.latestQuoteHTML || document.getElementById("quoteResult").innerHTML, {
+      x: 36,
+      y: 70, // adjust to provide space for the logo
+      width: 523,
+      windowWidth: 1024,
+      callback: function (doc) {
+        doc.save("Akiba_Quote.pdf");
+      }
+    });
+  };
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -771,15 +794,5 @@ window.addEventListener("DOMContentLoaded", () => {
     window.latestQuoteHTML = html;
   });
 
-  document.getElementById("downloadBtn").addEventListener("click", () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: "pt", format: "a4" });
-    doc.html(window.latestQuoteHTML || document.getElementById("quoteResult").innerHTML, {
-      x: 36,
-      y: 36,
-      width: 523,
-      windowWidth: 1024,
-      callback: function (doc) { doc.save("Akiba_Quote.pdf"); },
-    });
-  });
+  document.getElementById("downloadBtn").addEventListener("click", downloadQuoteAsPDF);
 });
