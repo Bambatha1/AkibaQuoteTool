@@ -1,16 +1,41 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
+  font-family: 'Inter', Arial, sans-serif;
+  background: linear-gradient(to bottom, #f9fafb, #e5e7eb);
   margin: 0;
   padding: 2rem;
 }
 
 .container {
-  max-width: 700px;
-  margin: auto;
-  background: white;
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
   padding: 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 40px;
+}
+
+.meta label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
 }
 
 h1 {
@@ -20,8 +45,9 @@ h1 {
 
 fieldset {
   margin-bottom: 1.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   padding: 1rem;
+  border-radius: 4px;
 }
 
 label {
@@ -29,27 +55,107 @@ label {
   margin-bottom: 1rem;
 }
 
-input, select {
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid2 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.grid3 {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+input,
+select {
   padding: 0.5rem;
   width: 100%;
   margin-top: 0.2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: #fff;
+  box-sizing: border-box;
 }
 
 button {
-  padding: 0.7rem 1.5rem;
+  padding: 0.6rem 1.2rem;
   background-color: #20335b;
-  color: white;
+  color: #fff;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 0.9rem;
 }
 
 button:hover {
   background-color: #314472;
 }
 
+.secondary {
+  background-color: #6b7280;
+}
+
+.secondary:hover {
+  background-color: #4b5563;
+}
+
+.remove-btn {
+  background: transparent;
+  color: #b91c1c;
+}
+
+.remove-btn:hover {
+  background: #fef2f2;
+}
+
 .quote-output {
   margin-top: 2rem;
   padding: 1rem;
-  background: #e8f0fe;
+  background: #f9fafb;
   border-left: 4px solid #20335b;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+thead {
+  background: #f3f4f6;
+}
+
+.totals {
+  max-width: 300px;
+  margin-left: auto;
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+}
+
+.totals-row.grand {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.actions {
+  text-align: right;
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
 }
