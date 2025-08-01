@@ -22,6 +22,9 @@ const decisionPrices = {
   enterprise: 0.8,
 };
 
+// URL for Slack incoming webhook. Replace with your actual webhook URL.
+const SLACK_WEBHOOK_URL = "";
+
 const products = {
   "/api/bankstatement/behavioral-risk": {
     description: "Behavioural Risk Score",
@@ -832,6 +835,38 @@ function downloadQuoteAsPDF() {
   };
 }
 
+function sendForApproval() {
+  const html = window.latestQuoteHTML;
+  if (!html) return;
+  const id = Date.now();
+  const quote = { id, html, status: 'pending' };
+  localStorage.setItem('quote_' + id, JSON.stringify(quote));
+  localStorage.setItem('currentQuoteId', id);
+  if (SLACK_WEBHOOK_URL) {
+    fetch(SLACK_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: `New quote awaiting approval: ${id}` })
+    });
+  }
+  alert('Quote sent for approval.');
+  document.getElementById('approvalBtn').style.display = 'none';
+  document.getElementById('statusBtn').style.display = 'inline-block';
+}
+
+function checkApprovalStatus() {
+  const id = localStorage.getItem('currentQuoteId');
+  if (!id) { alert('No quote submitted.'); return; }
+  const data = JSON.parse(localStorage.getItem('quote_' + id) || '{}');
+  if (data.status === 'approved') {
+    alert('Quote approved. You can download the PDF.');
+    document.getElementById('downloadBtn').style.display = 'inline-block';
+    document.getElementById('statusBtn').style.display = 'none';
+  } else {
+    alert('Still awaiting approval.');
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const qd = document.getElementById("quoteDate");
   if (qd && !qd.value) qd.value = new Date().toISOString().slice(0, 10);
@@ -850,9 +885,31 @@ window.addEventListener("DOMContentLoaded", () => {
     const totals = recalcAll();
     const html = renderQuoteHTML(totals);
     document.getElementById("quoteResult").innerHTML = html;
-    document.getElementById("downloadBtn").style.display = "inline-block";
+    document.getElementById("downloadBtn").style.display = "none";
+    document.getElementById("approvalBtn").style.display = "inline-block";
+    document.getElementById("statusBtn").style.display = "none";
     window.latestQuoteHTML = html;
   });
 
   document.getElementById("downloadBtn").addEventListener("click", downloadQuoteAsPDF);
+  document.getElementById("approvalBtn").addEventListener("click", sendForApproval);
+  document.getElementById("statusBtn").addEventListener("click", checkApprovalStatus);
+
+  const existingId = localStorage.getItem('currentQuoteId');
+  if (existingId) {
+    const data = JSON.parse(localStorage.getItem('quote_' + existingId) || '{}');
+    if (data.status === 'approved') {
+      document.getElementById("downloadBtn").style.display = "inline-block";
+    } else if (data.status === 'pending') {
+      document.getElementById("statusBtn").style.display = "inline-block";
+    }
+  }
+
+  const logout = document.getElementById("logoutBtn");
+  if (logout) {
+    logout.addEventListener("click", () => {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "login.html";
+    });
+  }
 });
