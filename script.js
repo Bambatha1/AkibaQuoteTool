@@ -855,4 +855,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("downloadBtn").addEventListener("click", downloadQuoteAsPDF);
+
+  const logout = document.getElementById("logoutBtn");
+  if (logout) {
+    logout.addEventListener("click", () => {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "login.html";
+    });
+  }
 });

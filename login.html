@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akiba Digital – Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to bottom, #f9fafb, #e5e7eb);
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    .login-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      width: 100%;
+      max-width: 360px;
+    }
+    .login-card h1 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #20335b;
+      font-size: 1.5rem;
+    }
+    .login-card label {
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .login-card input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      margin-top: 0.25rem;
+      box-sizing: border-box;
+    }
+    .login-card button {
+      width: 100%;
+      padding: 0.6rem;
+      background-color: #20335b;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .login-card button:hover {
+      background-color: #314472;
+    }
+  </style>
+</head>
+<body>
+  <form class="login-card" id="loginForm">
+    <h1>Sign In</h1>
+    <label>Email
+      <input type="email" id="loginEmail" required />
+    </label>
+    <label>Password
+      <input type="password" id="loginPassword" required />
+    </label>
+    <button type="submit">Login</button>
+  </form>
+  <script src="login.js"></script>
+</body>
+</html>
