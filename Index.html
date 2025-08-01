@@ -56,6 +56,28 @@
       </fieldset>
 
       <fieldset>
+        <legend>Subscription Options</legend>
+        <div class="grid3">
+          <label>Plan
+            <select id="plan">
+              <option value="starter">Starter</option>
+              <option value="growth">Growth</option>
+              <option value="enterprise">Enterprise</option>
+            </select>
+          </label>
+          <label>API Only
+            <input type="checkbox" id="apiOnly" />
+          </label>
+          <label>Decisions / month
+            <input type="number" id="decisionVolume" value="0" min="0" />
+          </label>
+          <label>Contract Months
+            <input type="number" id="contractMonths" value="12" min="1" />
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
         <legend>Products & Usage</legend>
 
         <div class="table-actions">

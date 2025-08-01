@@ -10,6 +10,18 @@ const defaultTiers = [
   { up_to: Infinity, price: 0 },
 ];
 
+const planFees = {
+  starter: 40000,
+  growth: 75000,
+  enterprise: 120000,
+};
+
+const decisionPrices = {
+  starter: 0.35,
+  growth: 0.55,
+  enterprise: 0.8,
+};
+
 const products = {
   "/api/bankstatement/behavioral-risk": {
     description: "Behavioural Risk Score",
@@ -564,6 +576,10 @@ function createNumberInput(min = 0, value = "") {
 
 function recalcAll() {
   const currency = document.getElementById("currency").value;
+  const plan = document.getElementById("plan")?.value || "starter";
+  const apiOnly = document.getElementById("apiOnly")?.checked || false;
+  const decisionVol = Number(document.getElementById("decisionVolume")?.value || 0);
+  const contractMonths = Number(document.getElementById("contractMonths")?.value || 0);
   const rows = Array.from(document.querySelectorAll("#lineItemsBody tr"));
 
   let subtotal = 0;
@@ -591,6 +607,13 @@ function recalcAll() {
     subtotal += lineTotal;
   });
 
+  const platformMonthly = planFees[plan];
+  const decisionUnit = decisionPrices[plan];
+  const platformTotal = apiOnly ? 0 : platformMonthly * contractMonths;
+  const decisionMonthly = decisionUnit * decisionVol;
+  const decisionTotal = decisionMonthly * contractMonths;
+  subtotal += platformTotal + decisionTotal;
+
   const applyVAT = document.getElementById("applyVAT").checked;
   const vatRate = Number(document.getElementById("vatRate").value || 0) / 100;
   const vat = applyVAT ? subtotal * vatRate : 0;
@@ -600,7 +623,20 @@ function recalcAll() {
   document.getElementById("vatDisplay").textContent = money(vat, currency);
   document.getElementById("grandTotalDisplay").textContent = money(total, currency);
 
-  return { subtotal, vat, total, currency };
+  return {
+    subtotal,
+    vat,
+    total,
+    currency,
+    plan,
+    apiOnly,
+    contractMonths,
+    platformMonthly,
+    platformTotal,
+    decisionUnit,
+    decisionVolume: decisionVol,
+    decisionTotal,
+  };
 }
 
 function addLineRow(preset = {}) {
@@ -679,6 +715,30 @@ function renderQuoteHTML(totals) {
     const lineTotal = monthly * months;
     return { endpoint, desc, volume, months, unit, monthly, lineTotal };
   });
+
+  if (!totals.apiOnly) {
+    rows.push({
+      endpoint: "Platform Fee",
+      desc: `Monthly Platform Fee (${totals.plan})`,
+      volume: "-",
+      months: totals.contractMonths,
+      unit: totals.platformMonthly,
+      monthly: totals.platformMonthly,
+      lineTotal: totals.platformTotal,
+    });
+  }
+
+  if (totals.decisionVolume > 0) {
+    rows.push({
+      endpoint: "Decisions",
+      desc: "Per Decision Pricing",
+      volume: totals.decisionVolume,
+      months: totals.contractMonths,
+      unit: totals.decisionUnit,
+      monthly: totals.decisionUnit * totals.decisionVolume,
+      lineTotal: totals.decisionTotal,
+    });
+  }
 
   const linesHTML = rows.map((r, i) => `
     <tr>
@@ -779,7 +839,7 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addLineBtn").addEventListener("click", () => addLineRow());
   addLineRow();
 
-  ["currency", "applyVAT", "vatRate"].forEach((id) => {
+  ["currency", "applyVAT", "vatRate", "plan", "apiOnly", "decisionVolume", "contractMonths"].forEach((id) => {
     const el = document.getElementById(id);
     el.addEventListener("input", recalcAll);
     el.addEventListener("change", recalcAll);
