@@ -29,6 +29,20 @@ label {
   margin-bottom: 1rem;
 }
 
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 1rem;
+}
+
+.grid2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 input, select {
   padding: 0.5rem;
   width: 100%;
