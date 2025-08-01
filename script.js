@@ -904,4 +904,12 @@ window.addEventListener("DOMContentLoaded", () => {
       document.getElementById("statusBtn").style.display = "inline-block";
     }
   }
+
+  const logout = document.getElementById("logoutBtn");
+  if (logout) {
+    logout.addEventListener("click", () => {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "login.html";
+    });
+  }
 });
