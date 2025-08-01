@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Akiba Digital Quotation Tool</title>
+  <script>
+    if (!localStorage.getItem('loggedIn')) {
+      window.location.href = 'login.html';
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -27,6 +32,7 @@
         <label>Quote #
           <input type="text" id="quoteNumber" placeholder="AKB-0001" />
         </label>
+        <button type="button" id="logoutBtn" class="secondary">Log Out</button>
       </div>
     </header>
 

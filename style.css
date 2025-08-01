@@ -37,6 +37,9 @@ body {
   flex-direction: column;
   margin-bottom: 0.5rem;
 }
+.meta button {
+  margin-top: 1.5rem;
+}
 
 h1 {
   color: #20335b;
